@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+CONTAINER_NAME=clickhoused
+
+function create() {
+  docker run -it -d \
+    --name $CONTAINER_NAME \
+    -p 8123:8123 \
+    -p 9000:9000 \
+    --cap-add=SYS_NICE \
+    --cap-add=NET_ADMIN \
+    --cap-add=IPC_LOCK \
+    docker.io/clickhouse/clickhouse-server \
+    > /dev/null
+}
+
+source "$( dirname -- "$0"; )/helpers/docker_daemon_manager.sh"

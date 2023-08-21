@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+CONTAINER_NAME=mysqld
+
+function create() {
+  docker run -it -d \
+    --name $CONTAINER_NAME \
+    -p 3306:3306 \
+    -e MYSQL_ROOT_PASSWORD=password \
+    --cap-add=SYS_NICE \
+    docker.io/library/mysql \
+    > /dev/null
+}
+
+source "$( dirname -- "$0"; )/helpers/docker_daemon_manager.sh"
