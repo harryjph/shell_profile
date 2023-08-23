@@ -14,6 +14,8 @@ mosh
 ncdu
 grep
 sed
+nnn
+git
 
 # Shells / Scripting utilities
 zsh
@@ -30,11 +32,12 @@ cargo
 # Interpreters / REPLs
 yaegi
 node
-deno
+#deno
 
 # Networking utilities
 curl
 wget
+nc
 bmon
 arp-scan
 
