@@ -29,12 +29,17 @@ cargo
 
 # Interpreters / REPLs
 yaegi
+node
+deno
 
 # Networking utilities
 curl
 wget
 bmon
 arp-scan
+
+# Database utilities
+mycli
 
 # Compression utilities
 gzip
