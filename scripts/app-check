@@ -16,6 +16,7 @@ grep
 sed
 nnn
 git
+tree
 
 # Shells / Scripting utilities
 zsh
@@ -28,6 +29,8 @@ gcc
 make
 go
 cargo
+jsonnet
+jsonnet-lint
 
 # Interpreters / REPLs
 yaegi
@@ -43,6 +46,7 @@ arp-scan
 
 # Database utilities
 mycli
+pgcli
 
 # Compression utilities
 gzip
