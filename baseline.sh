@@ -10,5 +10,3 @@ source $C/fs.sh
 if [ -n "$ZSH_VERSION" ]; then
   source $C/zsh.sh
 fi
-
-$C/app_checker.sh
