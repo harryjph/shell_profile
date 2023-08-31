@@ -80,13 +80,13 @@ Color=255,254,255
 Color=255,254,255
 
 [Foreground]
-Color=199,199,199
+Color=221,221,221
 
 [ForegroundFaint]
-Color=199,199,199
+Color=238,238,238
 
 [ForegroundIntense]
-Color=199,199,199
+Color=238,238,238
 
 [General]
 Anchor=0.5,0.5

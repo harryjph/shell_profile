@@ -6,11 +6,8 @@ declare -a apps=(
 bat
 file
 less
-nano
 htop
 neofetch
-ssh
-mosh
 ncdu
 grep
 sed
@@ -18,10 +15,21 @@ nnn
 git
 tree
 
+# Editors
+nano
+vim
+nvim
+
+# Terminal Utilities
+ssh
+mosh
+tmux
+
 # Shells / Scripting utilities
 zsh
 pv
 jq
+yq
 rlwrap
 
 # Compilers / Build Tools
