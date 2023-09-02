@@ -6,8 +6,9 @@ sed -i '/source $HOME\/.shell_profile\/initialize.sh/d' ~/.zshrc
 sed -i '/source $HOME\/.shell_profile\/initialize.sh/d' ~/.bashrc
 sed -i '/source $HOME\/.shell_profile\/initialize.sh/d' ~/.bash_profile
 
-# Remove ZSH configuration
+# Remove ZSH plugins
 rm -rf .config/zsh_plugins
+rm -rf .cache/zsh
 
 # Remove tmux configuration
 rm -rf .config/tmux

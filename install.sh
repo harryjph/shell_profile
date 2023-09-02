@@ -9,9 +9,13 @@ echo "source \$HOME/.shell_profile/initialize.sh" >> .bashrc
 echo "source \$HOME/.shell_profile/initialize.sh" >> .bash_profile
 echo "source \$HOME/.shell_profile/initialize.sh" >> .zshrc
 
-# Install ZSH configuration
+# Install ZSH plugins
 mkdir -p .config/zsh_plugins
+mkdir -p .cache/zsh
 git clone https://github.com/romkatv/powerlevel10k.git .config/zsh_plugins/powerlevel10k
+git clone https://github.com/zsh-users/zsh-autosuggestions.git .config/zsh_plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git .config/zsh_plugins/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-history-substring-search.git .config/zsh_plugins/zsh-history-substring-search
 
 # Install tmux configuration
 mkdir -p .config/tmux/plugins
