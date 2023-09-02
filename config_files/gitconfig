@@ -1,0 +1,11 @@
+[user]
+	name = Harry Phillips
+	email = harryjamesphillips@gmail.com
+	signingkey = E4F581AA073CD264
+[commit]
+	gpgsign = true
+[credential]
+	helper = store
+[core]
+	autocrlf = input
+	editor = nano

@@ -1,4 +1,4 @@
-C=$HOME/shell_profile/configs
+C=$HOME/.shell_profile/configs
 source $C/scripts.sh
 source $C/go.sh
 source $C/git_aliases.sh

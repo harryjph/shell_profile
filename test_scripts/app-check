@@ -39,6 +39,7 @@ go
 cargo
 jsonnet
 jsonnet-lint
+protoc
 
 # Interpreters / REPLs
 yaegi
