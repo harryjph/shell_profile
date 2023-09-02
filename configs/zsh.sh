@@ -29,6 +29,10 @@ setopt HIST_IGNORE_SPACE
 alias histload="fc -RI"
 alias loadhist="histload"
 
+# Move left/right using control + arrow key
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+
 # Initialize Plugins
 autoload -U compinit colors zcalc
 compinit -d
