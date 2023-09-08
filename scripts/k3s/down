@@ -4,6 +4,9 @@ cd -- "$( dirname -- "${BASH_SOURCE[0]}" )"
 if [[ $(basename $(pwd)) != "k3s" ]]; then
   cd k3s
 fi
-docker compose down
-rm kubeconfig.yaml
-
+if [[ $1 == "purge" ]]; then
+  docker compose down -v
+else
+  docker compose down
+fi
+rm kubeconfig.yaml 2>/dev/null || true
