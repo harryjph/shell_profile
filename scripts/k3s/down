@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -e
+cd -- "$( dirname -- "${BASH_SOURCE[0]}" )"
+if [[ $(basename $(pwd)) != "k3s" ]]; then
+  cd k3s
+fi
+docker compose down
+rm kubeconfig.yaml
+

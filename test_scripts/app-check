@@ -73,8 +73,8 @@ sha256sum
 sha3sum
 
 # Kubernetes
-#kubectl
-#k9s
+kubectl
+k9s
 #helm
 
 # Kafka
