@@ -1,3 +1,6 @@
+# Setup editor
+export EDITOR=nano
+
 alias cp="cp -i" # Confirm before overwriting something
 
 # Setup colours in ls
