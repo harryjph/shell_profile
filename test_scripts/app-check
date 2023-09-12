@@ -30,6 +30,7 @@ zsh
 pv
 jq
 yq
+yj
 rlwrap
 
 # Compilers / Build Tools
