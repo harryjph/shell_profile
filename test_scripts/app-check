@@ -76,10 +76,10 @@ sha3sum
 # Kubernetes
 kubectl
 k9s
-#helm
+helm
 
 # Kafka
-#kcl
+kcl
 
 )
 
