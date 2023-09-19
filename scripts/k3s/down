@@ -10,3 +10,4 @@ else
   docker compose down
 fi
 rm kubeconfig.yaml 2>/dev/null || true
+unset KUBECONFIG
