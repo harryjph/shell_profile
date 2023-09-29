@@ -9,6 +9,7 @@ less
 htop
 neofetch
 ncdu
+gdu
 grep
 sed
 nnn
@@ -27,6 +28,7 @@ tmux
 
 # Shells / Scripting utilities
 zsh
+nu
 pv
 jq
 yq
