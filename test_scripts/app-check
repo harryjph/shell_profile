@@ -75,6 +75,10 @@ zstd
 sha256sum
 sha3sum
 
+# Docker
+docker
+dockly
+
 # Kubernetes
 kubectl
 k9s
