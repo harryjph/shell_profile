@@ -4,6 +4,5 @@ function sshagent() {
 }
 
 function sshagentk() {
-    pids=$(pidof ssh-agent)
-    if [[ "$pids" != "" ]]; then; kill $pids; fi
+    kill $(pidof ssh-agent)
 }
