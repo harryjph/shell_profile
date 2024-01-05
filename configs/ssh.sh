@@ -3,4 +3,7 @@ function sshagent() {
     ssh-add ~/.ssh/id_ed25519
 }
 
-alias sshagentk="kill $(pidof ssh-agent)"
+function sshagentk() {
+    pids=$(pidof ssh-agent)
+    if [[ "$pids" != "" ]]; then; kill $pids; fi
+}
