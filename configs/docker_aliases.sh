@@ -1,6 +1,7 @@
 alias dcup="docker compose up -d"
 alias dcd="docker compose down"
 alias dcls="docker container ls -a --format \"table {{.Names}}\t{{.Image}}\t{{.Status}}\""
+alias dr="docker run --rm -it"
 
 function dcrm() {
   docker container stop "$1" > /dev/null || exit
