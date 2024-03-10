@@ -22,6 +22,7 @@ mkdir -p .config/tmux/plugins
 ln -s ~/.config/tmux .tmux
 git clone https://github.com/tmux-plugins/tpm.git .config/tmux/plugins/tpm
 ln -s ~/.shell_profile/config_files/tmux.conf .config/tmux/tmux.conf
+# After this, open tmux, press control+space -> shift+I to install plugins
 
 # Install Git configuration
 mkdir -p .config/git

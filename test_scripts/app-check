@@ -10,11 +10,13 @@ htop
 neofetch
 ncdu
 gdu
+dust
 grep
 sed
 nnn
 git
 tree
+tldr
 
 # Editors
 nano
@@ -25,6 +27,8 @@ nvim
 ssh
 mosh
 tmux
+zellij
+fzf
 
 # Shells / Scripting utilities
 zsh
@@ -48,6 +52,7 @@ protoc
 yaegi
 node
 #deno
+bun
 
 # Networking utilities
 curl
