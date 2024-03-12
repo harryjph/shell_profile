@@ -28,4 +28,8 @@ ln -s ~/.shell_profile/config_files/tmux.conf .config/tmux/tmux.conf
 mkdir -p .config/git
 ln -s ~/.shell_profile/config_files/gitconfig .config/git/config
 
+# Install Alacritty Configuration
+mkdir -p .config/alacritty
+ln -s ~/.shell_profile/config_files/alacritty.toml .config/alacritty/alacritty.toml
+
 echo "Installed!"

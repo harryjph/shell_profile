@@ -17,4 +17,7 @@ rm .tmux
 # Remove Git configuration
 rm .config/git/config
 
+# Remove Alacritty Configuration
+rm -rf .config/alacritty
+
 echo "Uninstalled."
