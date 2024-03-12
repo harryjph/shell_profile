@@ -1,0 +1,64 @@
+# Font Settings
+[font]
+size = 11.0
+[font.bold]
+family = "JetBrainsMono Nerd Font"
+style = "Bold"
+[font.bold_italic]
+family = "JetBrainsMono Nerd Font"
+style = "Bold Italic"
+[font.italic]
+family = "JetBrainsMono Nerd Font"
+style = "Italic"
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Regular"
+
+# Keyboard Bindings
+[keyboard]
+bindings = [
+  # Control+Shift+N => New Window
+  { key = "n", mods = "Control|Shift", action = "SpawnNewInstance" }
+]
+
+# Transparent Background
+[window]
+opacity = 0.75
+
+# Colours
+[colors.primary]
+background = '#000000'
+foreground = '#dddddd'
+
+# Cursor colors
+[colors.cursor]
+cursor = '#fcbb6a' # TODO
+text = '#ffffff' # TODO
+
+# Normal colors
+[colors.normal]
+black = '#000000'
+red = '#ff2c0b'
+green = '#0be20b'
+yellow = '#fffb00'
+blue = '#33aaff'
+magenta = '#c930c7'
+cyan = '#00c5c7'
+white = '#c7c7c7'
+
+# Bright colors
+[colors.bright]
+black = '#000000'
+red = '#ff6d67'
+green = '#5ff967'
+yellow = '#fefb67'
+blue = '#62bdff'
+magenta = '#ff76ff'
+cyan = '#5ffdff'
+white = '#fffeff'
+
+# Selection colors
+[colors.selection]
+background = '#4e5a65' # TODO
+text = '#d8dee9' # TODO
+
