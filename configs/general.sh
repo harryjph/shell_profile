@@ -10,6 +10,7 @@ alias ls='ls $LS_OPTIONS'
 
 # Setup colours in man
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANROFFOPT="-c"
 
 # Fix bat under Debian
 if which batcat > /dev/null 2>&1; then alias bat=batcat; fi
