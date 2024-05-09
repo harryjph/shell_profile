@@ -16,3 +16,8 @@ export MANROFFOPT="-c"
 
 # Fix bat under Debian
 if which batcat > /dev/null 2>&1; then alias bat=batcat; fi
+
+# Paged diff
+function dif() {
+	diff $1 $2 | bat -l=diff
+}

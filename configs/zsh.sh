@@ -7,6 +7,7 @@ source ~/.shell_profile/config_files/p10k.zsh
 
 # General configuration
 setopt correct # Autocorrect
+setopt interactivecomments # Allow comments in terminal
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' # Case insensitive tab completion
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}" # Coloured completion
 zstyle ':completion:*' rehash true # Automatically find new executables in $PATH
