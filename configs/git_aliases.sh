@@ -11,6 +11,7 @@ alias gs="git status"
 alias glo="git log --oneline"
 alias gsw="git switch"
 alias grh="git reset --hard"
+alias gitclean="git clean -xdf"
 
 function gacp() {
   git add . && git commit -m "$1" && git push
