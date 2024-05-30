@@ -14,3 +14,4 @@ source $C/python.sh
 source $C/lolz.sh
 source $C/fs.sh
 source $C/ssh.sh
+source $C/tools.sh
