@@ -10,10 +10,6 @@ sed -i '/source $HOME\/.shell_profile\/initialize.sh/d' ~/.bash_profile
 rm -rf .config/zsh_plugins
 rm -rf .cache/zsh
 
-# Remove tmux configuration
-rm -rf .config/tmux
-rm .tmux
-
 # Remove Git configuration
 rm .config/git/config
 

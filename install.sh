@@ -17,13 +17,6 @@ git clone https://github.com/zsh-users/zsh-autosuggestions.git .config/zsh_plugi
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git .config/zsh_plugins/zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-history-substring-search.git .config/zsh_plugins/zsh-history-substring-search
 
-# Install tmux configuration
-mkdir -p .config/tmux/plugins
-ln -s ~/.config/tmux .tmux
-git clone https://github.com/tmux-plugins/tpm.git .config/tmux/plugins/tpm
-ln -s ~/.shell_profile/config_files/tmux.conf .config/tmux/tmux.conf
-# After this, open tmux, press control+space -> shift+I to install plugins
-
 # Install Git configuration
 mkdir -p .config/git
 ln -s ~/.shell_profile/config_files/gitconfig .config/git/config
