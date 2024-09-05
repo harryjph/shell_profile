@@ -13,7 +13,7 @@ alias cp="cp -i" # Confirm before overwriting something
 
 # ls/eza setup
 if which eza > /dev/null 2>&1; then
-  alias ls="eza --icons=auto"
+  alias ls="eza --icons=auto --across --group --smart-group --header --links --mounts --git"
   alias tree="ls --tree"
 else
   alias ls="ls --color=auto"
