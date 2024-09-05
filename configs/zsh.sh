@@ -36,6 +36,7 @@ bindkey "^[[1;5D" backward-word # Control + Left arrow
 bindkey  "^[[H"   beginning-of-line # Home
 bindkey  "^[[F"   end-of-line # End
 bindkey  "^[[3~"  delete-char # Delete
+bindkey "^R" history-incremental-search-backward # Control+R to search history
 
 # Initialize Plugins
 autoload -U compinit colors zcalc

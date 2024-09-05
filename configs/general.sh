@@ -1,14 +1,25 @@
 # Setup editor
-export EDITOR=nano
+export EDITOR=micro
 export PAGER=bat
+
+# Aliases to view/edit a file
+alias e="$EDITOR"
+alias v="$PAGER"
+
+# Fast Watch
+alias watch="watch -n 0.1"
 
 alias cp="cp -i" # Confirm before overwriting something
 
-# Setup colours in ls
-export LS_OPTIONS='--color=auto'
+# ls/eza setup
+if which eza > /dev/null 2>&1; then
+  alias ls="eza --icons=auto"
+  alias tree="ls --tree"
+else
+  alias ls="ls --color=auto"
+fi
 if which dircolors > /dev/null 2>/dev/null; then eval "$(dircolors -b)"; fi
-alias ls='ls $LS_OPTIONS'
-alias lsl="ls -alh"
+alias ll="ls -alh"
 
 # Setup colours in man
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
