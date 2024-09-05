@@ -23,7 +23,7 @@ bindings = [
 
 # Transparent Background
 [window]
-opacity = 0.75
+opacity = 0.95
 
 # Colours
 [colors.primary]
