@@ -16,4 +16,7 @@ rm .config/git/config
 # Remove Alacritty Configuration
 rm -rf .config/alacritty
 
+# Remove Micro Configuration
+rm -rf .config/micro
+
 echo "Uninstalled."

@@ -25,4 +25,8 @@ ln -s ~/.shell_profile/config_files/gitconfig .config/git/config
 mkdir -p .config/alacritty
 ln -s ~/.shell_profile/config_files/alacritty.toml .config/alacritty/alacritty.toml
 
+# Install Micro Configuration
+mkdir -p .config/micro
+ln -s ~/.shell_profile/config_files/micro.json .config/micro/settings.json
+
 echo "Installed!"
