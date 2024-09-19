@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+CONTAINER_NAME=postgresd
+
+function create() {
+  docker run -it -d \
+    --name $CONTAINER_NAME \
+    -p 5432:5432 \
+    -e POSTGRES_PASSWORD=password \
+    --cap-add=SYS_NICE \
+    docker.io/library/postgres \
+    > /dev/null
+}
+
+source "$( dirname -- "$0"; )/helpers/docker_daemon_manager.sh"
