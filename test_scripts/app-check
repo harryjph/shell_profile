@@ -17,6 +17,7 @@ nnn
 git
 tree
 eza
+rg
 
 # Editors
 nano
