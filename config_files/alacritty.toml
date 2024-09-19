@@ -1,3 +1,16 @@
+[window]
+opacity = 0.95
+dynamic_padding = true
+option_as_alt = "Both" # MacOS only
+
+[cursor]
+style = { shape = "Beam", blinking = "Always" }
+blink_timeout = 0
+thickness = 0.2
+
+[terminal]
+osc52 = "CopyPaste"
+
 # Font Settings
 [font]
 size = 11
@@ -18,12 +31,11 @@ style = "Light"
 [keyboard]
 bindings = [
   # Control+Shift+N => New Window
-  { key = "n", mods = "Control|Shift", action = "SpawnNewInstance" }
+  { key = "n", mods = "Control|Shift", action = "SpawnNewInstance" },
+  { key = "F10", action = "ToggleMaximized" },
+  { key = "F11", action = "ToggleFullscreen" },
+  { key = "F12", action = "ResetFontSize" },
 ]
-
-# Transparent Background
-[window]
-opacity = 0.95
 
 # Colours
 [colors.primary]
