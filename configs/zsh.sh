@@ -35,6 +35,8 @@ bindkey "^[[1;5C" forward-word # Control + Right arrow
 bindkey "^[[1;5D" backward-word # Control + Left arrow
 bindkey  "^[[H"   beginning-of-line # Home
 bindkey  "^[[F"   end-of-line # End
+bindkey  "^[OH"   beginning-of-line # Home (When Zellij sometimes breaks input)
+bindkey  "^[OF"   end-of-line # End (When Zellij sometimes breaks input)
 bindkey  "^[[3~"  delete-char # Delete
 bindkey "^R" history-incremental-search-backward # Control+R to search history
 
