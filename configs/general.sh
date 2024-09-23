@@ -1,6 +1,6 @@
 # Setup editor
 export EDITOR=micro
-export PAGER=bat
+export PAGER="bat --wrap never"
 
 # Aliases to view/edit a file
 alias e="$EDITOR"
