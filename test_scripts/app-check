@@ -37,6 +37,7 @@ zsh
 nu
 pv
 jq
+jqp
 yq
 yj
 rlwrap
@@ -95,6 +96,7 @@ helm
 # API Utilities
 kcl
 atac
+gh
 
 )
 
