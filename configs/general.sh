@@ -12,12 +12,20 @@ alias watch="watch -n 0.1"
 alias cp="cp -i" # Confirm before overwriting something
 
 # ls/eza setup
-if which eza > /dev/null 2>&1; then
-  alias ls="eza --icons=auto --group --smart-group --header --links --mounts --git"
-  alias tree="ls --tree"
-else
-  alias ls="ls --color=auto"
-fi
+function ls() {
+	if which eza > /dev/null 2>&1; then
+	  eza --icons=auto --group --smart-group --header --links --mounts --git "$@"
+	else
+	  ls --color=auto "$@"
+	fi
+}
+function tree() {
+	if which eza > /dev/null 2>&1; then
+	  ls --tree "$@"
+	else
+	  tree "$@"
+	fi
+}
 if which dircolors > /dev/null 2>/dev/null; then eval "$(dircolors -b)"; fi
 alias ll="ls -alh"
 
