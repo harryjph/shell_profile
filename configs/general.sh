@@ -4,7 +4,18 @@ export PAGER="bat --wrap never"
 
 # Aliases to view/edit a file
 alias e="$EDITOR"
-alias v="$PAGER"
+function v() {
+	target="$1"
+	if [ -d "$target" ] ; then
+	    ls "$target"
+	else
+	    eval "$PAGER" "$target"
+	fi
+}
+# VJ = View Json
+function vj() {
+	jq . $1 | eval "$PAGER" -l json
+}
 
 # Fast Watch
 alias watch="watch -n 0.1"

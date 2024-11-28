@@ -9,3 +9,5 @@
 [core]
 	autocrlf = input
 	editor = nano
+[push]
+	autoSetupRemote = true

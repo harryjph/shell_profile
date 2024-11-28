@@ -33,12 +33,17 @@ alias loadhist="histload"
 # Basic key bindings
 bindkey "^[[1;5C" forward-word # Control + Right arrow
 bindkey "^[[1;5D" backward-word # Control + Left arrow
-bindkey  "^[[H"   beginning-of-line # Home
-bindkey  "^[[F"   end-of-line # End
-bindkey  "^[OH"   beginning-of-line # Home (When Zellij sometimes breaks input)
-bindkey  "^[OF"   end-of-line # End (When Zellij sometimes breaks input)
-bindkey  "^[[3~"  delete-char # Delete
+bindkey "^[[H"   beginning-of-line # Home
+bindkey "^[[F"   end-of-line # End
+bindkey "^[OH"   beginning-of-line # Home (When Zellij sometimes breaks input)
+bindkey "^[OF"   end-of-line # End (When Zellij sometimes breaks input)
+bindkey "^[[3~"  delete-char # Delete
 bindkey "^R" history-incremental-search-backward # Control+R to search history
+bindkey "^?" backward-delete-char # Sometimes this gets set to vi-backward-delete-char, this makes sure its not in vi- mode
+bindkey \^U backward-kill-line # Control + U to delete from cursor position to the beginning of the line (Ctrl+K deletes to the end)
+
+# Remove some characters from zsh's word characters so that ctrl+left/right doesn't skip over them
+WORDCHARS=${WORDCHARS//[\;\/]}
 
 # Initialize Plugins
 autoload -U compinit colors zcalc
