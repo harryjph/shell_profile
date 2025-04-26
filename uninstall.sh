@@ -19,4 +19,7 @@ rm -rf .config/alacritty
 # Remove Micro Configuration
 rm -rf .config/micro
 
+# Remove Zellij Configuration
+rm -rf .config/zellij
+
 echo "Uninstalled."

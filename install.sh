@@ -29,4 +29,8 @@ ln -s ~/.shell_profile/config_files/alacritty.toml .config/alacritty/alacritty.t
 mkdir -p .config/micro
 ln -s ~/.shell_profile/config_files/micro.json .config/micro/settings.json
 
+# Install Zellij Configuration
+mkdir -p .config/zellij
+ln -s ~/.shell_profile/config_files/zellij.kdl .config/zellij/config.kdl
+
 echo "Installed!"
