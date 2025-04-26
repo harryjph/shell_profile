@@ -11,4 +11,4 @@ function dcrm() {
 
 alias list_container_names="docker container ls -a --format \"table {{.Names}}\" | grep -v ^NAMES$"
 alias dcstop="list_container_names | xargs docker stop"
-alias dcpurge="list_container_names | xargs -I % sh -c 'docker stop % && docker rm %'"
+alias dcpurge="list_container_names | xargs -I % sh -c 'docker kill %; docker rm %'"

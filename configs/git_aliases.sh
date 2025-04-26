@@ -1,7 +1,7 @@
 alias gc="git commit"
 alias gcm="git commit -m"
 alias gco="git checkout"
-alias gcl="git clone"
+alias gcl="git clone --recursive"
 alias gpl="git pull"
 alias gp="git push"
 alias gf="git fetch"
@@ -18,4 +18,4 @@ function gacp() {
 }
 
 # Git Delete All Branches
-alias git-dab="git for-each-ref --format '%(refname:short)' refs/heads | grep -v \"master\|main\" | xargs git branch -D"
+alias git-dab="git for-each-ref --format '%(refname:lstrip=2)' refs/heads | grep -v \"master\|main\" | xargs git branch -D"

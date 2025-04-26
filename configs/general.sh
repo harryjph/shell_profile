@@ -1,4 +1,4 @@
-# Setup editor
+## Setup editor
 export EDITOR=micro
 export PAGER="bat --wrap never"
 
