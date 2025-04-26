@@ -15,3 +15,4 @@ source $C/lolz.sh
 source $C/fs.sh
 source $C/ssh.sh
 source $C/tools.sh
+source $C/zellij.sh
