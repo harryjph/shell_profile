@@ -13,9 +13,15 @@ alias gsw="git switch"
 alias grh="git reset --hard"
 alias gitclean="git clean -xdf"
 
+function _git_default_branch() {
+	git symbolic-ref refs/remotes/origin/HEAD | cut -f4 -d '/'
+}
+
 function gacp() {
   git add . && git commit -m "$1" && git push
 }
 
 # Git Delete All Branches
-alias git-dab="git for-each-ref --format '%(refname:lstrip=2)' refs/heads | grep -v \"master\|main\" | xargs git branch -D"
+function git-dab() {
+	git for-each-ref --format '%(refname:lstrip=2)' refs/heads | grep -v "$(_git_default_branch)" | xargs -r git branch -D
+}
