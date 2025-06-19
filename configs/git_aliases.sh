@@ -25,3 +25,8 @@ function gacp() {
 function git-dab() {
 	git for-each-ref --format '%(refname:lstrip=2)' refs/heads | grep -v "$(_git_default_branch)" | xargs -r git branch -D
 }
+
+function gmp() {
+	git checkout "$(_git_default_branch)"
+	git pull 
+}
