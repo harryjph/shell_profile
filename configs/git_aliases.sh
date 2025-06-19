@@ -27,6 +27,7 @@ function git-dab() {
 }
 
 function gmp() {
+    # Git (switch to) Main (and) Pull
 	git checkout "$(_git_default_branch)"
 	git pull 
 }
