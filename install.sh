@@ -28,7 +28,7 @@ ln -s ~/.shell_profile/config_files/alacritty.toml .config/alacritty/alacritty.t
 
 # Install Ghostty Configuration
 mkdir -p .config/ghostty
-ln -s ~/.shell_config/config_files/ghostty .config/ghostty/config
+ln -s ~/.shell_profile/config_files/ghostty .config/ghostty/config
 
 # Install Micro Configuration
 mkdir -p .config/micro
