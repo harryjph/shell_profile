@@ -26,6 +26,10 @@ ln -s ~/.shell_profile/config_files/gitconfig .config/git/config
 mkdir -p .config/alacritty
 ln -s ~/.shell_profile/config_files/alacritty.toml .config/alacritty/alacritty.toml
 
+# Install Ghostty Configuration
+mkdir -p .config/ghostty
+ln -s ~/.shell_config/config_files/ghostty .config/ghostty/config
+
 # Install Micro Configuration
 mkdir -p .config/micro
 ln -s ~/.shell_profile/config_files/micro.json .config/micro/settings.json

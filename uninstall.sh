@@ -17,6 +17,9 @@ rm .config/git/config
 # Remove Alacritty Configuration
 rm -rf .config/alacritty
 
+# Remove Ghostty Configuration
+rm -rf .config/ghostty
+
 # Remove Micro Configuration
 rm -rf .config/micro
 
