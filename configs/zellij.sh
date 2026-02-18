@@ -1,4 +1,8 @@
-alias z="zellij attach --create default"
+# Aliases
+alias z="zellij"
+alias zd="zellij attach --create default"
+
+# Initialise completions
 if command -v zellij 2>&1 >/dev/null; then
   if [ -n "$ZSH_VERSION" ]; then
       eval "$(zellij setup --generate-completion zsh)"

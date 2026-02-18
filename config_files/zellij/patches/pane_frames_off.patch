@@ -1,0 +1,11 @@
+--- default.kdl	2026-02-18 19:27:16.537689617 +0000
++++ config.kdl	2026-02-18 19:28:58.495757426 +0000
+@@ -309,7 +309,7 @@
+ //   - true (default, enabled)
+ //   - false
+ // 
+-// pane_frames false
++pane_frames false
+  
+ // When attaching to an existing session with other users,
+ // should the session be mirrored (true)

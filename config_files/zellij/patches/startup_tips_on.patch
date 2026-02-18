@@ -1,0 +1,11 @@
+--- default.kdl	2026-02-18 19:27:16.537689617 +0000
++++ config.kdl	2026-02-18 19:29:26.467530755 +0000
+@@ -485,7 +485,7 @@
+ // Whether to show tips on startup
+ // Default: true
+ // 
+-// show_startup_tips false
++show_startup_tips true
+  
+ // Whether to show release notes on first version run
+ // Default: true

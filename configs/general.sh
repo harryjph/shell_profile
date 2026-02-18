@@ -2,8 +2,14 @@
 export EDITOR=micro
 export PAGER="bat --wrap never"
 
-# Aliases to view/edit a file
-alias e="$EDITOR"
+# Functions to view/edit a file
+function e() {
+	if [ $ZELLIJ ]; then
+	  zellij edit $@
+	else
+	  $EDITOR $@
+	fi
+}
 function v() {
 	target="$1"
 	if [ -d "$target" ] ; then
