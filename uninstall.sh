@@ -5,6 +5,7 @@ cd $HOME
 sed -i '/source $HOME\/.shell_profile\/initialize.sh/d' ~/.zshrc
 sed -i '/source $HOME\/.shell_profile\/initialize.sh/d' ~/.bashrc
 sed -i '/source $HOME\/.shell_profile\/initialize.sh/d' ~/.bash_profile
+sed -i '/setopt norcs/d' ~/.zlogout
 
 # Remove ZSH plugins
 rm -rf .config/zsh_plugins

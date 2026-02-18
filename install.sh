@@ -8,6 +8,7 @@ cd $HOME
 echo "source \$HOME/.shell_profile/initialize.sh" >> .bashrc
 echo "source \$HOME/.shell_profile/initialize.sh" >> .bash_profile
 echo "source \$HOME/.shell_profile/initialize.sh" >> .zshrc
+echo "setopt norcs" >> .zlogout # Prevent screen clear when logging out of SSH sessions
 
 # Install ZSH plugins
 mkdir -p .config/zsh_plugins
