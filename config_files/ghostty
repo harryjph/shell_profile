@@ -26,7 +26,7 @@ foreground = #dddddd
 
 # Cursor colors
 cursor-color = #dddddd
-cursor-tetxt = #000000
+cursor-text = #000000
 
 # Selection colors
 selection-background = #dddddd
