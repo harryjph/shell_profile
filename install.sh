@@ -13,10 +13,10 @@ echo "setopt norcs" >> .zlogout # Prevent screen clear when logging out of SSH s
 # Install ZSH plugins
 mkdir -p .config/zsh_plugins
 mkdir -p .cache/zsh
-git clone https://github.com/romkatv/powerlevel10k.git .config/zsh_plugins/powerlevel10k
-git clone https://github.com/zsh-users/zsh-autosuggestions.git .config/zsh_plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git .config/zsh_plugins/zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-history-substring-search.git .config/zsh_plugins/zsh-history-substring-search
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git .config/zsh_plugins/powerlevel10k
+git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions.git .config/zsh_plugins/zsh-autosuggestions
+git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting.git .config/zsh_plugins/zsh-syntax-highlighting
+git clone --depth=1 https://github.com/zsh-users/zsh-history-substring-search.git .config/zsh_plugins/zsh-history-substring-search
 
 # Install Git configuration
 mkdir -p .config/git
