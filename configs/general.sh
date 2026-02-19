@@ -33,7 +33,7 @@ function ls() {
 	if which eza > /dev/null 2>&1; then
 	  eza --icons=auto --group --smart-group --header --links --mounts --git "$@"
 	else
-	  ls --color=auto "$@"
+	  /usr/bin/env ls --color=auto "$@"
 	fi
 }
 function tree() {
