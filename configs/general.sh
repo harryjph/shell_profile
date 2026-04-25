@@ -13,9 +13,9 @@ function e() {
 function v() {
 	target="$1"
 	if [ -d "$target" ] ; then
-	    ls "$target"
+	    ls $@
 	else
-	    eval "$PAGER" "$target"
+	    eval "$PAGER" $@
 	fi
 }
 # VJ = View Json
