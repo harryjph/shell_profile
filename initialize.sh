@@ -4,6 +4,7 @@ if [ -n "$ZSH_VERSION" ]; then
   source $C/zsh.sh
 fi
 
+source $C/aliases.sh
 source $C/general.sh
 source $C/scripts.sh
 source $C/go.sh
