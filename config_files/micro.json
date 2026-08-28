@@ -1,4 +1,5 @@
 {
     "clipboard": "terminal",
+    "useprimary": false,
     "mkparents": true
 }
