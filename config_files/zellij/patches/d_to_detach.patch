@@ -1,6 +1,6 @@
---- default.kdl	2026-02-18 19:27:16.537689617 +0000
-+++ config.kdl	2026-02-18 19:31:12.180087015 +0000
-@@ -2,6 +2,9 @@
+--- default.kdl
++++ config.kdl
+@@ -6,6 +6,9 @@
      locked {
          bind "Ctrl g" { SwitchToMode "normal"; }
      }

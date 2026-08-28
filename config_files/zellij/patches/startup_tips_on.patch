@@ -1,6 +1,6 @@
---- default.kdl	2026-02-18 19:27:16.537689617 +0000
-+++ config.kdl	2026-02-18 19:29:26.467530755 +0000
-@@ -485,7 +485,7 @@
+--- default.kdl
++++ config.kdl
+@@ -547,7 +547,7 @@
  // Whether to show tips on startup
  // Default: true
  // 

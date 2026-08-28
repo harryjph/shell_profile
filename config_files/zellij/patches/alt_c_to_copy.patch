@@ -1,6 +1,6 @@
---- default.kdl	2026-02-18 19:27:16.537689617 +0000
-+++ config.kdl	2026-02-18 19:27:48.309391345 +0000
-@@ -154,6 +154,7 @@
+--- default.kdl
++++ config.kdl
+@@ -171,6 +171,7 @@
          bind "Alt =" { Resize "Increase"; }
          bind "Alt [" { PreviousSwapLayout; }
          bind "Alt ]" { NextSwapLayout; }
@@ -8,7 +8,7 @@
          bind "Alt f" { ToggleFloatingPanes; }
          bind "Alt h" { MoveFocusOrTab "left"; }
          bind "Alt i" { MoveTab "left"; }
-@@ -361,7 +362,7 @@
+@@ -412,7 +413,7 @@
  // Enable automatic copying (and clearing) of selection when releasing mouse
  // Default: true
  // 
