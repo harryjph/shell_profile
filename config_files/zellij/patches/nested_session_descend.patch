@@ -1,0 +1,11 @@
+--- default.kdl	2026-08-28 17:17:59.313903226 +0100
++++ config.kdl	2026-08-28 17:36:14.457490978 +0100
+@@ -634,7 +634,7 @@
+ //   - "descend" (always control the nested session on focus)
+ //   - "never" (never prompt or descend; do it manually)
+ // 
+-// nested_session_handling "ask"
++nested_session_handling "descend"
+  
+ // Which escape sequence desktop notifications coming from panes are
+ // forwarded to the host terminal with.

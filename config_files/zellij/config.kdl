@@ -357,7 +357,7 @@ default_mode "locked"
 //   - true (default, enabled)
 //   - false
 // 
-pane_frames false
+// pane_frames false
  
 // Set the pane frame style when pane_frames is enabled
 // Options:
@@ -629,7 +629,7 @@ show_startup_tips true
 // in any pane - including one running on a remote machine over SSH - can
 // read the clipboard without the user being asked.
 // Default: false
-// dangerously_enable_paste_buffer_read false
+dangerously_enable_paste_buffer_read true
  
 // How to handle a nested Zellij session detected inside a pane.
 // Options:
@@ -638,7 +638,7 @@ show_startup_tips true
 //   - "descend" (always control the nested session on focus)
 //   - "never" (never prompt or descend; do it manually)
 // 
-// nested_session_handling "ask"
+nested_session_handling "descend"
  
 // Which escape sequence desktop notifications coming from panes are
 // forwarded to the host terminal with.
@@ -649,4 +649,4 @@ show_startup_tips true
 //   - "bell" (ring the terminal bell instead)
 //   - "off" (do not forward notifications to the host terminal)
 // 
-// host_notification_protocol "auto"
+host_notification_protocol "osc99"

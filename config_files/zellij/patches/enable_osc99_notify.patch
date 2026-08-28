@@ -1,0 +1,8 @@
+--- default.kdl	2026-08-28 17:17:59.313903226 +0100
++++ config.kdl	2026-08-28 17:34:35.924544392 +0100
+@@ -645,4 +645,4 @@
+ //   - "bell" (ring the terminal bell instead)
+ //   - "off" (do not forward notifications to the host terminal)
+ // 
+-// host_notification_protocol "auto"
++host_notification_protocol "osc99"
