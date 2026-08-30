@@ -57,3 +57,6 @@ if which batcat > /dev/null 2>&1; then alias bat=batcat; fi
 function dif() {
 	diff $1 $2 | bat -l=diff
 }
+
+# Create Tarball
+alias tarc="tar cv --owner 0 --group 0 -f"
