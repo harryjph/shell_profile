@@ -1,6 +1,6 @@
 # Aliases
 alias z="zellij"
-alias zd="zellij attach --create default"
+alias zd="zellij attach --create $(hostname)"
 
 # Initialise completions
 # TODO disabled because it's slow and produces a warning on ZSH startup :(
