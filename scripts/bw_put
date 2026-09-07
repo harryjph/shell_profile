@@ -18,34 +18,41 @@ if [ ! -f "$FILE_PATH" ]; then
   exit 1
 fi
 
-# Resolve absolute path
-ABS_PATH="$(cd "$(dirname "$FILE_PATH")" && pwd)/$(basename "$FILE_PATH")"
+FILE_NAME="$(basename "$FILE_PATH")"
+ABS_PATH="$(cd "$(dirname "$FILE_PATH")" && pwd)/$FILE_NAME"
 
-# Build vault-friendly name (e.g., ~/.git-credentials or ~/config/.env)
+# Build vault-friendly name (e.g., dotfile: ~/.git-credentials)
 if [[ "$ABS_PATH" == "$HOME"* ]]; then
   VAULT_NAME="dotfile: ~${ABS_PATH#"$HOME"}"
 else
   VAULT_NAME="dotfile: $ABS_PATH"
 fi
 
-# Read and encode file content safely
-CONTENT="$(cat "$FILE_PATH")"
+# Find or create vault item
+ITEM_JSON="$(bw list items --search "$VAULT_NAME" | jq -c --arg name "$VAULT_NAME" '.[] | select(.name == $name)' | head -n 1)"
 
-# Check if item already exists
-ITEM_ID="$(bw list items --search "$VAULT_NAME" | jq -r --arg name "$VAULT_NAME" '.[] | select(.name == $name) | .id' | head -n 1)"
-
-if [ -n "$ITEM_ID" ]; then
-  echo "Updating existing vault item: $VAULT_NAME ($ITEM_ID)..."
-  UPDATED_JSON="$(bw get item "$ITEM_ID" | jq --arg notes "$CONTENT" '.notes = $notes')"
-  echo "$UPDATED_JSON" | bw encode | bw edit item "$ITEM_ID" >/dev/null
-  echo "Successfully updated $VAULT_NAME in Bitwarden."
-else
-  echo "Creating new vault item: $VAULT_NAME..."
+if [ -z "$ITEM_JSON" ]; then
+  echo "Creating new container note: $VAULT_NAME..."
   TEMPLATE="$(bw get template item)"
   ITEM_JSON="$(echo "$TEMPLATE" | jq \
     --arg name "$VAULT_NAME" \
-    --arg notes "$CONTENT" \
-    '.name = $name | .type = 2 | .secureNote = {"type": 0} | .notes = $notes')"
-  echo "$ITEM_JSON" | bw encode | bw create item >/dev/null
-  echo "Successfully created $VAULT_NAME in Bitwarden."
+    --arg notes "Dotfile synced via bw_put. Original path: $ABS_PATH" \
+    '.name = $name | .type = 2 | .secureNote = {"type": 0} | .notes = $notes' | bw encode | bw create item)"
+  ITEM_ID="$(echo "$ITEM_JSON" | jq -r '.id')"
+else
+  ITEM_ID="$(echo "$ITEM_JSON" | jq -r '.id')"
+  echo "Found existing container: $VAULT_NAME ($ITEM_ID)"
+
+  # Remove existing attachment with the same name if present
+  ATTACHMENT_ID="$(echo "$ITEM_JSON" | jq -r --arg fn "$FILE_NAME" '.attachments[]? | select(.fileName == $fn) | .id' | head -n 1)"
+  if [ -n "$ATTACHMENT_ID" ]; then
+    echo "Replacing existing attachment '$FILE_NAME'..."
+    bw delete attachment "$ATTACHMENT_ID" --itemid "$ITEM_ID" >/dev/null
+  fi
 fi
+
+# Upload attachment
+echo "Uploading '$FILE_NAME' as attachment..."
+bw create attachment --file "$FILE_PATH" --itemid "$ITEM_ID" >/dev/null
+
+echo "Successfully saved '$VAULT_NAME' ($FILE_NAME) to Bitwarden."

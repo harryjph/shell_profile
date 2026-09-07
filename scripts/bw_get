@@ -15,9 +15,8 @@ fi
 TARGET="$1"
 OUTPUT_PATH="${2:-}"
 
-# Normalize target to match vault naming convention
+# Normalize target name
 if [[ "$TARGET" != dotfile:* ]]; then
-  # Expand target relative to HOME if needed
   if [[ "$TARGET" == "$HOME"* ]]; then
     VAULT_NAME="dotfile: ~${TARGET#"$HOME"}"
   elif [[ "$TARGET" == ~* ]]; then
@@ -34,7 +33,15 @@ else
   VAULT_NAME="$TARGET"
 fi
 
-# Locate item in vault
+# Determine write path
+if [ -z "$OUTPUT_PATH" ]; then
+  RESTORE_PATH="${VAULT_NAME#dotfile: }"
+  OUTPUT_PATH="${RESTORE_PATH/#\~/$HOME}"
+fi
+
+TARGET_FILE_NAME="$(basename "$OUTPUT_PATH")"
+
+# Retrieve item
 ITEM_JSON="$(bw list items --search "$VAULT_NAME" | jq -c --arg name "$VAULT_NAME" '.[] | select(.name == $name)' | head -n 1)"
 
 if [ -z "$ITEM_JSON" ]; then
@@ -42,20 +49,22 @@ if [ -z "$ITEM_JSON" ]; then
   exit 1
 fi
 
-# Determine write path
-if [ -z "$OUTPUT_PATH" ]; then
-  RESTORE_PATH="${VAULT_NAME#dotfile: }"
-  # Expand ~ to $HOME
-  OUTPUT_PATH="${RESTORE_PATH/#\~/$HOME}"
+ITEM_ID="$(echo "$ITEM_JSON" | jq -r '.id')"
+
+# Match attachment name, or fall back to the first available attachment
+ATTACHMENT_NAME="$(echo "$ITEM_JSON" | jq -r --arg fn "$TARGET_FILE_NAME" \
+  '([.attachments[]? | select(.fileName == $fn) | .fileName] + [.attachments[]?.fileName])[0] // empty')"
+
+if [ -z "$ATTACHMENT_NAME" ]; then
+  echo "Error: No attachments found in '$VAULT_NAME'." >&2
+  exit 1
 fi
 
-# Ensure parent directory exists
+# Ensure output directory exists
 mkdir -p "$(dirname "$OUTPUT_PATH")"
 
-# Extract secure note content and write to file
-echo "$ITEM_JSON" | jq -r '.notes' > "$OUTPUT_PATH"
+# Download attachment directly to destination
+bw get attachment "$ATTACHMENT_NAME" --itemid "$ITEM_ID" --output "$OUTPUT_PATH" >/dev/null
 
-# Set strict permissions on secret dotfiles
 chmod 600 "$OUTPUT_PATH"
-
-echo "Wrote '$VAULT_NAME' to $OUTPUT_PATH (permissions: 600)"
+echo "Downloaded '$ATTACHMENT_NAME' to $OUTPUT_PATH (permissions: 600)"

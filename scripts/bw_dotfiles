@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# ---------------------------------------------------------
+# Configuration: Add your tracked dotfiles here
+# Paths can use ~ or full paths.
+# ---------------------------------------------------------
+DOTFILES=(
+  "~/.git-credentials"
+  "~/.kube/config"
+)
+
+# ---------------------------------------------------------
+# Usage & Subcommand Handling
+# ---------------------------------------------------------
+usage() {
+  echo "Usage: $(basename "$0") {get|put|push|diff}" >&2
+  exit 1
+}
+
+if [ $# -lt 1 ]; then
+  usage
+fi
+
+ACTION="$1"
+
+# Allow "push" as an alias for "put"
+case "$ACTION" in
+  get)
+    CMD="bw_get"
+    ;;
+  put|push)
+    CMD="bw_put"
+    ;;
+  diff)
+    CMD="bw_diff"
+    ;;
+  *)
+    usage
+    ;;
+esac
+
+# Verify the sub-script exists and is executable in PATH
+if ! command -v "$CMD" >/dev/null 2>&1; then
+  echo "Error: Command '$CMD' not found in PATH or not executable." >&2
+  exit 1
+fi
+
+# Ensure BW_SESSION is active before running the loop
+if [ -z "${BW_SESSION:-}" ]; then
+  echo "Error: BW_SESSION is not set. Run 'export BW_SESSION=\$(bw unlock --raw)' first." >&2
+  exit 1
+fi
+
+# ---------------------------------------------------------
+# Execution Loop
+# ---------------------------------------------------------
+FAILED_COUNT=0
+
+for file in "${DOTFILES[@]}"; do
+  # Expand leading ~ to $HOME
+  RESOLVED_PATH="${file/#\~/$HOME}"
+
+  echo "========================================"
+  echo "Action: $ACTION -> $file"
+  echo "========================================"
+
+  # For put/diff, ensure local file exists before delegating
+  if [[ "$ACTION" =~ ^(put|push|diff)$ ]] && [ ! -f "$RESOLVED_PATH" ]; then
+    echo "Warning: Local file '$RESOLVED_PATH' does not exist. Skipping." >&2
+    continue
+  fi
+
+  if ! "$CMD" "$RESOLVED_PATH"; then
+    echo "Failed to $ACTION '$file'." >&2
+    FAILED_COUNT=$((FAILED_COUNT + 1))
+  fi
+  echo ""
+done
+
+if [ "$FAILED_COUNT" -gt 0 ]; then
+  echo "Finished with $FAILED_COUNT error(s)." >&2
+  exit 1
+fi
+
+echo "All tasks completed successfully."
