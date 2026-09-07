@@ -28,7 +28,7 @@ else
   VAULT_NAME="dotfile: $ABS_PATH"
 fi
 
-# Find or create vault item
+# Find or create the container Secure Note
 ITEM_JSON="$(bw list items --search "$VAULT_NAME" | jq -c --arg name "$VAULT_NAME" '.[] | select(.name == $name)' | head -n 1)"
 
 if [ -z "$ITEM_JSON" ]; then
@@ -36,23 +36,35 @@ if [ -z "$ITEM_JSON" ]; then
   TEMPLATE="$(bw get template item)"
   ITEM_JSON="$(echo "$TEMPLATE" | jq \
     --arg name "$VAULT_NAME" \
-    --arg notes "Dotfile synced via bw_put. Original path: $ABS_PATH" \
+    --arg notes "Dotfile synced via bw_put." \
     '.name = $name | .type = 2 | .secureNote = {"type": 0} | .notes = $notes' | bw encode | bw create item)"
   ITEM_ID="$(echo "$ITEM_JSON" | jq -r '.id')"
 else
   ITEM_ID="$(echo "$ITEM_JSON" | jq -r '.id')"
   echo "Found existing container: $VAULT_NAME ($ITEM_ID)"
 
-  # Remove existing attachment with the same name if present
-  ATTACHMENT_ID="$(echo "$ITEM_JSON" | jq -r --arg fn "$FILE_NAME" '.attachments[]? | select(.fileName == $fn) | .id' | head -n 1)"
-  if [ -n "$ATTACHMENT_ID" ]; then
-    echo "Replacing existing attachment '$FILE_NAME'..."
-    bw delete attachment "$ATTACHMENT_ID" --itemid "$ITEM_ID" >/dev/null
+  # Locate existing active attachment matching FILE_NAME
+  CURRENT_ATT_ID="$(echo "$ITEM_JSON" | jq -r --arg fn "$FILE_NAME" '.attachments[]? | select(.fileName == $fn) | .id' | head -n 1)"
+
+  if [ -n "$CURRENT_ATT_ID" ]; then
+    TIMESTAMP="$(date -u +"%Y%m%dT%H%M%SZ")"
+    ARCHIVE_NAME="${FILE_NAME}.${TIMESTAMP}.bak"
+    TMP_DIR="$(mktemp -d "/tmp/bw_put_archive.XXXXXX")"
+    ARCHIVE_PATH="${TMP_DIR}/${ARCHIVE_NAME}"
+
+    trap 'rm -rf "$TMP_DIR"' EXIT
+
+    echo "Archiving previous version as '$ARCHIVE_NAME'..."
+    bw get attachment "$FILE_NAME" --itemid "$ITEM_ID" --output "$ARCHIVE_PATH" >/dev/null
+    bw create attachment --file "$ARCHIVE_PATH" --itemid "$ITEM_ID" >/dev/null
+
+    # Remove the unversioned copy so the active slot is free
+    bw delete attachment "$CURRENT_ATT_ID" --itemid "$ITEM_ID" >/dev/null
   fi
 fi
 
-# Upload attachment
-echo "Uploading '$FILE_NAME' as attachment..."
+# Upload the current local file as the primary attachment
+echo "Uploading new '$FILE_NAME' as active attachment..."
 bw create attachment --file "$FILE_PATH" --itemid "$ITEM_ID" >/dev/null
 
-echo "Successfully saved '$VAULT_NAME' ($FILE_NAME) to Bitwarden."
+echo "Successfully updated '$VAULT_NAME' with full version history."
