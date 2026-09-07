@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+FOLDER_NAME="Dotfiles"
+
 if [ -z "${BW_SESSION:-}" ]; then
   echo "Error: BW_SESSION is not set. Run 'export BW_SESSION=\$(bw unlock --raw)' first." >&2
   exit 1
@@ -28,16 +30,26 @@ else
   VAULT_NAME="dotfile: $ABS_PATH"
 fi
 
-# Find or create the container Secure Note
-ITEM_JSON="$(bw list items --search "$VAULT_NAME" | jq -c --arg name "$VAULT_NAME" '.[] | select(.name == $name)' | head -n 1)"
+# Ensure the target folder exists and get its ID
+FOLDER_ID="$(bw list folders | jq -r --arg name "$FOLDER_NAME" '.[] | select(.name == $name) | .id' | head -n 1)"
+if [ -z "$FOLDER_ID" ]; then
+  echo "Creating folder '$FOLDER_NAME' in vault..."
+  FOLDER_TEMPLATE="$(bw get template folder)"
+  FOLDER_JSON="$(echo "$FOLDER_TEMPLATE" | jq --arg name "$FOLDER_NAME" '.name = $name' | bw encode | bw create folder)"
+  FOLDER_ID="$(echo "$FOLDER_JSON" | jq -r '.id')"
+fi
+
+# Find container Secure Note inside the target folder
+ITEM_JSON="$(bw list items --folderid "$FOLDER_ID" --search "$VAULT_NAME" | jq -c --arg name "$VAULT_NAME" '.[] | select(.name == $name)' | head -n 1)"
 
 if [ -z "$ITEM_JSON" ]; then
-  echo "Creating new container note: $VAULT_NAME..."
+  echo "Creating new container note in '$FOLDER_NAME': $VAULT_NAME..."
   TEMPLATE="$(bw get template item)"
   ITEM_JSON="$(echo "$TEMPLATE" | jq \
     --arg name "$VAULT_NAME" \
     --arg notes "Dotfile synced via bw_put." \
-    '.name = $name | .type = 2 | .secureNote = {"type": 0} | .notes = $notes' | bw encode | bw create item)"
+    --arg folderId "$FOLDER_ID" \
+    '.name = $name | .folderId = $folderId | .type = 2 | .secureNote = {"type": 0} | .notes = $notes' | bw encode | bw create item)"
   ITEM_ID="$(echo "$ITEM_JSON" | jq -r '.id')"
 else
   ITEM_ID="$(echo "$ITEM_JSON" | jq -r '.id')"
@@ -77,4 +89,4 @@ fi
 echo "Uploading new '$FILE_NAME' as active attachment..."
 bw create attachment --file "$FILE_PATH" --itemid "$ITEM_ID" >/dev/null
 
-echo "Successfully updated '$VAULT_NAME' with full version history."
+echo "Successfully updated '$VAULT_NAME' in '$FOLDER_NAME' with full version history."
