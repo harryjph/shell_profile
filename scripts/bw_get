@@ -4,13 +4,13 @@ set -euo pipefail
 FOLDER_NAME="Dotfiles"
 
 if [ -z "${BW_SESSION:-}" ]; then
-  echo "Error: BW_SESSION is not set. Run 'export BW_SESSION=\$(bw unlock --raw)' first." >&2
+  echo "❌ Error: BW_SESSION is not set. Run 'export BW_SESSION=\$(bw unlock --raw)' first." >&2
   exit 1
 fi
 
 if [ $# -lt 1 ]; then
-  echo "Usage: $0 <vault-file-name-or-path> [output-path]" >&2
-  echo "Example: $0 ~/.git-credentials" >&2
+  echo "ℹ️  Usage: $0 <vault-file-name-or-path> [output-path]" >&2
+  echo "👉 Example: $0 ~/.git-credentials" >&2
   exit 1
 fi
 
@@ -47,7 +47,7 @@ TARGET_FILE_NAME="$(basename "$OUTPUT_PATH")"
 FOLDER_ID="$(bw list folders | jq -r --arg name "$FOLDER_NAME" '.[] | select(.name == $name) | .id' | head -n 1)"
 
 if [ -z "$FOLDER_ID" ]; then
-  echo "Error: Folder '$FOLDER_NAME' not found in vault." >&2
+  echo "❌ Error: Folder '$FOLDER_NAME' not found in vault." >&2
   exit 1
 fi
 
@@ -55,7 +55,7 @@ fi
 ITEM_JSON="$(bw list items --folderid "$FOLDER_ID" --search "$VAULT_NAME" | jq -c --arg name "$VAULT_NAME" '.[] | select(.name == $name)' | head -n 1)"
 
 if [ -z "$ITEM_JSON" ]; then
-  echo "Error: Vault item '$VAULT_NAME' not found in folder '$FOLDER_NAME'." >&2
+  echo "❌ Error: Vault item '$VAULT_NAME' not found in folder '$FOLDER_NAME'." >&2
   exit 1
 fi
 
@@ -66,7 +66,7 @@ ATTACHMENT_NAME="$(echo "$ITEM_JSON" | jq -r --arg fn "$TARGET_FILE_NAME" \
   '([.attachments[]? | select(.fileName == $fn) | .fileName] + [.attachments[]?.fileName])[0] // empty')"
 
 if [ -z "$ATTACHMENT_NAME" ]; then
-  echo "Error: No attachments found in '$VAULT_NAME'." >&2
+  echo "❌ Error: No attachments found in '$VAULT_NAME'." >&2
   exit 1
 fi
 
@@ -77,4 +77,4 @@ mkdir -p "$(dirname "$OUTPUT_PATH")"
 bw get attachment "$ATTACHMENT_NAME" --itemid "$ITEM_ID" --output "$OUTPUT_PATH" >/dev/null
 
 chmod 600 "$OUTPUT_PATH"
-echo "Downloaded '$ATTACHMENT_NAME' to $OUTPUT_PATH (permissions: 600)"
+echo "✅ Downloaded '$ATTACHMENT_NAME' to $OUTPUT_PATH (permissions: 600)"
