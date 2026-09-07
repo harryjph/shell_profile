@@ -41,29 +41,39 @@ if [ -z "$ITEM_JSON" ]; then
   ITEM_ID="$(echo "$ITEM_JSON" | jq -r '.id')"
 else
   ITEM_ID="$(echo "$ITEM_JSON" | jq -r '.id')"
-  echo "Found existing container: $VAULT_NAME ($ITEM_ID)"
 
   # Locate existing active attachment matching FILE_NAME
   CURRENT_ATT_ID="$(echo "$ITEM_JSON" | jq -r --arg fn "$FILE_NAME" '.attachments[]? | select(.fileName == $fn) | .id' | head -n 1)"
 
   if [ -n "$CURRENT_ATT_ID" ]; then
-    TIMESTAMP="$(date -u +"%Y%m%dT%H%M%SZ")"
-    ARCHIVE_NAME="${FILE_NAME}.${TIMESTAMP}.bak"
-    TMP_DIR="$(mktemp -d "/tmp/bw_put_archive.XXXXXX")"
-    ARCHIVE_PATH="${TMP_DIR}/${ARCHIVE_NAME}"
-
+    TMP_DIR="$(mktemp -d "/tmp/bw_put_check.XXXXXX")"
     trap 'rm -rf "$TMP_DIR"' EXIT
 
+    EXISTING_FILE="${TMP_DIR}/${FILE_NAME}"
+    bw get attachment "$FILE_NAME" --itemid "$ITEM_ID" --output "$EXISTING_FILE" >/dev/null
+
+    # Compare local file with vault copy; exit early if identical
+    if cmp -s "$FILE_PATH" "$EXISTING_FILE"; then
+      echo "No changes detected for '$VAULT_NAME'. Skipping."
+      exit 0
+    fi
+
+    # Changes exist: archive the old version
+    TIMESTAMP="$(date -u +"%Y%m%dT%H%M%SZ")"
+    ARCHIVE_NAME="${FILE_NAME}.${TIMESTAMP}.bak"
+    ARCHIVE_PATH="${TMP_DIR}/${ARCHIVE_NAME}"
+
+    mv "$EXISTING_FILE" "$ARCHIVE_PATH"
+
     echo "Archiving previous version as '$ARCHIVE_NAME'..."
-    bw get attachment "$FILE_NAME" --itemid "$ITEM_ID" --output "$ARCHIVE_PATH" >/dev/null
     bw create attachment --file "$ARCHIVE_PATH" --itemid "$ITEM_ID" >/dev/null
 
-    # Remove the unversioned copy so the active slot is free
+    # Remove the unversioned copy to free the slot
     bw delete attachment "$CURRENT_ATT_ID" --itemid "$ITEM_ID" >/dev/null
   fi
 fi
 
-# Upload the current local file as the primary attachment
+# Upload current local file as active attachment
 echo "Uploading new '$FILE_NAME' as active attachment..."
 bw create attachment --file "$FILE_PATH" --itemid "$ITEM_ID" >/dev/null
 
