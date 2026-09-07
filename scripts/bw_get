@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ -z "${BW_SESSION:-}" ]; then
+  echo "Error: BW_SESSION is not set. Run 'export BW_SESSION=\$(bw unlock --raw)' first." >&2
+  exit 1
+fi
+
+if [ $# -lt 1 ]; then
+  echo "Usage: $0 <vault-file-name-or-path> [output-path]" >&2
+  echo "Example: $0 ~/.git-credentials" >&2
+  exit 1
+fi
+
+TARGET="$1"
+OUTPUT_PATH="${2:-}"
+
+# Normalize target to match vault naming convention
+if [[ "$TARGET" != dotfile:* ]]; then
+  # Expand target relative to HOME if needed
+  if [[ "$TARGET" == "$HOME"* ]]; then
+    VAULT_NAME="dotfile: ~${TARGET#"$HOME"}"
+  elif [[ "$TARGET" == ~* ]]; then
+    VAULT_NAME="dotfile: $TARGET"
+  else
+    ABS_TARGET="$(cd "$(dirname "$TARGET")" 2>/dev/null && pwd)/$(basename "$TARGET")" || ABS_TARGET="$TARGET"
+    if [[ "$ABS_TARGET" == "$HOME"* ]]; then
+      VAULT_NAME="dotfile: ~${ABS_TARGET#"$HOME"}"
+    else
+      VAULT_NAME="dotfile: $ABS_TARGET"
+    fi
+  fi
+else
+  VAULT_NAME="$TARGET"
+fi
+
+# Locate item in vault
+ITEM_JSON="$(bw list items --search "$VAULT_NAME" | jq -c --arg name "$VAULT_NAME" '.[] | select(.name == $name)' | head -n 1)"
+
+if [ -z "$ITEM_JSON" ]; then
+  echo "Error: Vault item '$VAULT_NAME' not found." >&2
+  exit 1
+fi
+
+# Determine write path
+if [ -z "$OUTPUT_PATH" ]; then
+  RESTORE_PATH="${VAULT_NAME#dotfile: }"
+  # Expand ~ to $HOME
+  OUTPUT_PATH="${RESTORE_PATH/#\~/$HOME}"
+fi
+
+# Ensure parent directory exists
+mkdir -p "$(dirname "$OUTPUT_PATH")"
+
+# Extract secure note content and write to file
+echo "$ITEM_JSON" | jq -r '.notes' > "$OUTPUT_PATH"
+
+# Set strict permissions on secret dotfiles
+chmod 600 "$OUTPUT_PATH"
+
+echo "Wrote '$VAULT_NAME' to $OUTPUT_PATH (permissions: 600)"
