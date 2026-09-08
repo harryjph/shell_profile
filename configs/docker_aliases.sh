@@ -1,3 +1,7 @@
+if ! which docker > /dev/null 2>&1; then
+  export PATH="$HOME/.shell_profile/scripts/docker-podman:$PATH"
+fi
+
 alias dcup="docker compose up -d"
 alias dcd="docker compose down"
 alias dcls="docker container ls -a --format \"table {{.Names}}\t{{.Image}}\t{{.Status}}\""
