@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+image=$(podman build -q -f ~/.shell_profile/config_files/sandbox.containerfile)
+
+podman run -it --rm \
+  -v "$HOME/.gemini:/root/.gemini:z" \
+  -v "$(pwd):$(pwd):z" \
+  "$image" \
+  bash -c "
+export PATH=\"/root/.local/bin:$PATH\"
+cd $(pwd)
+agy --dangerously-skip-permissions $@
+"
