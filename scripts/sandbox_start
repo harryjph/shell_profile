@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+image=$(podman build -q -f ~/.shell_profile/config_files/sandbox.containerfile)
+
+podman run -it -d \
+  --name "sandbox" \
+  -p 8082:8082 \
+  -v "$(which zellij):/usr/bin/zellij:ro" \
+  -v "$HOME/.shell_profile:/root/.shell_profile:ro,z" \
+  -v "$HOME/.gemini:/root/.gemini:z" \
+  -v "$HOME/workspace:/root/workspace:z" \
+  "$image" \
+  bash -c "
+set -euo pipefail
+/root/.shell_profile/install.sh
+
+openssl req -x509 -newkey rsa:2048 -keyout /tmp/key.pem -out /tmp/cert.pem -days 365 -nodes -subj \"/CN=localhost\"
+
+zellij web --create-token > /tmp/zellij_token.txt
+
+export SHELL=zsh
+export PATH=\"/root/.local/bin:$PATH\"
+cd ~/workspace
+zellij web --ip '::' --cert /tmp/cert.pem --key /tmp/key.pem
+"
+
+# Wait briefly for token generation and extract token_1
+until podman exec sandbox test -f /tmp/zellij_token.txt; do
+  sleep 0.5
+done
+
+token=$(podman exec sandbox awk '/token_1:/ {print $2}' /tmp/zellij_token.txt)
+podman exec sandbox rm /tmp/zellij_token.txt
+echo "Zellij Web Token: ${token}"
