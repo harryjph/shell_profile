@@ -52,9 +52,7 @@ FAILED_COUNT=0
 for file in "${DOTFILES[@]}"; do
   RESOLVED_PATH="${file/#\~/$HOME}"
 
-  echo "========================================"
   echo "🔄 Action: $ACTION -> $file"
-  echo "========================================"
 
   # For put or diff, the local file must exist
   if [[ "$ACTION" =~ ^(put|diff)$ ]] && [ ! -f "$RESOLVED_PATH" ]; then
