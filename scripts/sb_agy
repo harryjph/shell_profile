@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+mount_dir=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
 image=$(podman build -q -f ~/.shell_profile/config_files/sandbox.containerfile)
 
 podman run -it --rm \
   -v "$HOME/.gemini:/root/.gemini:z" \
-  -v "$(pwd):$(pwd):z" \
+  -v "$mount_dir:$mount_dir:z" \
   "$image" \
   bash -c "
 export PATH=\"/root/.local/bin:$PATH\"
