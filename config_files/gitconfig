@@ -9,9 +9,15 @@
 	editor = nano
 [push]
 	autoSetupRemote = true
+# Generic config MUST go before site-specific config
+[credential]
+    helper = cache
+    helper = bitwarden
 [credential "https://github.com"]
+# Blank helper resets the chain
+	helper = 
 	helper = !gh auth git-credential
 [credential "https://gist.github.com"]
+# Blank helper resets the chain
+    helper = 
 	helper = !gh auth git-credential
-[credential]
-    helper = bw

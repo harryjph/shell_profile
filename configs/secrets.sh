@@ -1,5 +1,5 @@
 load_secret() {
-  local var_name="$1"
+  local var_name="${1:-}"
   if [[ -z "$var_name" ]]; then
     echo "Error: No variable name provided." >&2
     return 1
@@ -28,14 +28,14 @@ bw_login() {
   local state_dir="${XDG_STATE_HOME:-$HOME/.local/state/.secrets}"
 
   # Load BW_SESSION from disk if not already set in the current shell
-  if [[ -z "$BW_SESSION" && -s "$state_dir/BW_SESSION" ]]; then
+  if [[ -z "${BW_SESSION:-}" && -s "$state_dir/BW_SESSION" ]]; then
     source "$state_dir/BW_SESSION"
     export BW_SESSION
   fi
 
   # Exit early if already logged in and the session key is valid
-  if bw login --check >/dev/null 2>&1 && bw unlock --check --session "$BW_SESSION" >/dev/null 2>&1; then
-    echo "Already logged in"
+  if bw login --check >/dev/null 2>&1 && [[ -n "${BW_SESSION:-}" ]] && bw unlock --check --session "$BW_SESSION" >/dev/null 2>&1; then
+    echo "bw: Already logged in"
     return 0
   fi
 
