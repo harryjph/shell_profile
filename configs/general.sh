@@ -60,3 +60,6 @@ function dif() {
 
 # Create Tarball
 alias tarc="tar cv --owner 0 --group 0 -f"
+
+# Add current directory to path
+alias path.="export PATH=\"\$(pwd):\$PATH\""
