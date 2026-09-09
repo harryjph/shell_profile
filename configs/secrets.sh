@@ -39,24 +39,27 @@ bw_login() {
     return 0
   fi
 
-  # Otherwise, perform fresh login and unlock
-  bw logout 2>/dev/null || true
+  # Only logout and login if not already logged in
+  if ! bw login --check >/dev/null 2>&1; then
+    bw logout 2>/dev/null || true
   
-  load_secret BW_SERVER
-  load_secret BW_CLIENTID
-  load_secret BW_CLIENTSECRET
+    load_secret BW_SERVER
+    load_secret BW_CLIENTID
+    load_secret BW_CLIENTSECRET
 
-  bw config server "$BW_SERVER"
-  bw login --apikey --raw
+    bw config server "$BW_SERVER"
+    bw login --apikey --raw
+
+    unset BW_SERVER
+    unset BW_CLIENTID
+    unset BW_CLIENTSECRET
+  fi
+
   export BW_SESSION="$(bw unlock --raw)"
 
   # Save BW_SESSION to the secrets directory with restricted permissions
   mkdir -p "$state_dir"
   (umask 077 && printf 'BW_SESSION=%q\n' "$BW_SESSION" > "$state_dir/BW_SESSION")
-
-  unset BW_SERVER
-  unset BW_CLIENTID
-  unset BW_CLIENTSECRET
 
   bw unlock --check
 }
