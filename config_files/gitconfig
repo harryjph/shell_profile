@@ -21,3 +21,5 @@
 # Blank helper resets the chain
     helper = 
 	helper = !gh auth git-credential
+[init]
+	defaultBranch = main
