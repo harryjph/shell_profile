@@ -165,10 +165,6 @@ keybinds clear-defaults=true {
         }
     }
     shared_among "normal" "locked" {
-        bind "Alt left" { MoveFocusOrTab "left"; }
-        bind "Alt down" { MoveFocus "down"; }
-        bind "Alt up" { MoveFocus "up"; }
-        bind "Alt right" { MoveFocusOrTab "right"; }
         bind "Alt +" { Resize "Increase"; }
         bind "Alt -" { Resize "Decrease"; }
         bind "Alt =" { Resize "Increase"; }
@@ -568,7 +564,7 @@ show_startup_tips true
  
 // Whether scrolling a pane implicitly enters and exits Scroll mode
 // default is true
-// scroll_mode_sync false
+scroll_mode_sync false
  
 // Whether to enable mouse hover visual effects (frame highlight and help text)
 // default is true

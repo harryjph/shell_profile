@@ -1,0 +1,11 @@
+--- default.kdl	2026-08-28 17:17:59.313903226 +0100
++++ config.kdl	2026-09-23 02:31:15.027273161 +0100
+@@ -564,7 +564,7 @@
+  
+ // Whether scrolling a pane implicitly enters and exits Scroll mode
+ // default is true
+-// scroll_mode_sync false
++scroll_mode_sync false
+  
+ // Whether to enable mouse hover visual effects (frame highlight and help text)
+ // default is true
