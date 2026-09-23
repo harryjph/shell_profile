@@ -86,7 +86,7 @@ fn main() -> Result<()> {
 }
 
 fn get_path(suffix: &str, app: &str) -> IndexSet<String> {
-    let app = app.replace("-", ".");
+    let app = app.replace("-", "_");
     let mut result = get_env_list(&format!("SANDBOX_PATH{suffix}"));
     result.extend(get_env_list(&format!("SANDBOX_PATH{suffix}_{app}")));
     result
