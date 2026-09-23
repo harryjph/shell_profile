@@ -7,6 +7,10 @@ use std::process::Command;
 
 #[derive(Parser, Debug)]
 struct Cli {
+    /// If set, prints the podman command that would be executed
+    #[clap(long)]
+    dry_run: bool,
+
     /// The application or binary to run
     app: String,
 
@@ -70,7 +74,7 @@ fn main() -> Result<()> {
     podman_args.push(image.clone());
     podman_args.extend(cli.args);
 
-    if env::var("SANDBOX_DRY_RUN").is_ok() {
+    if cli.dry_run {
         println!("podman {}", podman_args.join(" "));
         return Ok(());
     }
