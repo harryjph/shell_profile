@@ -86,12 +86,16 @@ fn get_path(suffix: &str, app: &str) -> IndexSet<String> {
     let mut result = get_env_list(&format!("SANDBOX_PATH{suffix}"));
     result.extend(get_env_list(&format!("SANDBOX_PATH{suffix}_{app}")));
     result
+        .into_iter()
+        .map(|s| shellexpand::tilde(&s).to_string())
+        .collect()
 }
 
 fn get_env_list(var: &str) -> IndexSet<String> {
     env::var(var)
         .unwrap_or_default()
         .split(':')
+        .filter(|s| !s.is_empty())
         .map(ToString::to_string)
         .collect()
 }
