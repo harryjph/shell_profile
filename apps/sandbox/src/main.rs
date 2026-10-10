@@ -92,6 +92,7 @@ fn get_path(suffix: &str, app: &str) -> IndexSet<String> {
     result
         .into_iter()
         .map(|s| shellexpand::tilde(&s).to_string())
+        .map(|s| s.trim().to_string())
         .collect()
 }
 

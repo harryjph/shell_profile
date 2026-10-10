@@ -61,5 +61,11 @@ function dif() {
 # Create Tarball
 alias tarc="tar cv --owner 0 --group 0 -f"
 
+# Add a directory to a PATH e.g. `path LD_LIBRARY_PATH /lib64`
+path() {
+    local v=$1; shift; local IFS=:
+    eval "export $v=\"\$*\"\${$v:+:\$$v}"
+}
+
 # Add current directory to path
-alias path.="export PATH=\"\$(pwd):\$PATH\""
+alias path.="path PATH \"\$(pwd)\""

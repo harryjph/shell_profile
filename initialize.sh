@@ -11,6 +11,7 @@ source $C/go.sh
 source $C/git_aliases.sh
 source $C/docker_aliases.sh
 source $C/sandbox.sh
+source $C/llm.sh
 source $C/kube_aliases.sh
 source $C/python.sh
 source $C/lolz.sh
