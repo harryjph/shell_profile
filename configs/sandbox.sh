@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+alias sb="sandbox"
+alias sbagy="sandbox agy --dangerously-skip-permissions"
+alias sboc="sandbox opencode --standalone --auto"
 
 # Reset all vars
 unset $(env | grep SANDBOX | cut -d '=' -f1 | tr '\n' ' ')
@@ -7,11 +10,17 @@ unset $(env | grep SANDBOX | cut -d '=' -f1 | tr '\n' ' ')
 export SANDBOX_IMAGE="fedora"
 export SANDBOX_ENV="HOME:PATH:LD_LIBRARY_PATH:TERM"
 path SANDBOX_PATH "/bin" "/usr/bin" "/usr/local/bin" "~/.local/bin" "~/go/bin"
+path SANDBOX_PATH "/lib" "/lib64" "/usr/lib" "/usr/lib64"
+path SANDBOX_PATH "/usr/libexec"
+path SANDBOX_PATH "~/.shell_profile"
 
 # Include Homebrew if it's installed
 if [ -d "/home/linuxbrew" ]; then
     path SANDBOX_PATH "/home/linuxbrew"
 fi
+
+# Git
+path SANDBOX_PATH "~/.config/git"
 
 # Golang
 path SANDBOX_PATH_RW "~/go/pkg"
